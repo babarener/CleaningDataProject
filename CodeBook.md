@@ -31,37 +31,23 @@ Each observation (windowed sample) includes 561 features derived from time and f
 
 ## Steps Performed
 
-1. **Download and Unzip Data**
-   - Script checks for and downloads the original dataset ZIP if not already available.
-   
-2. **Read and Merge Data**
-   - Training and test sets are read and combined into one dataset with 563 columns: `Subject`, `Activity`, and 561 features.
-
-3. **Extract Mean and Standard Deviation Variables**
-   - Only variables with names containing `mean()` or `std()` are extracted.
-   - This results in 66 feature columns, in addition to `Subject` and `Activity`.
-
-4. **Assign Descriptive Activity Names**
-   - Numeric activity codes are converted into labels using `factor()`:
-     - WALKING
-     - WALKING_UPSTAIRS
-     - WALKING_DOWNSTAIRS
-     - SITTING
-     - STANDING
-     - LAYING
-
-5. **Create Tidy Data Set**
-   - Data is grouped by `Subject` and `Activity`.
-   - For each pair, the **mean of each of the 66 measurements** is calculated.
-   - The result is a tidy dataset with 180 observations (30 subjects × 6 activities) and 68 variables.
+1. **Data Loading**: All raw files are loaded into R and combined into a single dataset.
+2. **Feature Selection**: Only measurements containing `mean()` or `std()` in their names were retained (66 variables).
+3. **Labeling**: Activity codes were replaced with descriptive activity names.
+4. **Summarization**: The dataset was grouped by `Subject` and `Activity`, and the mean of each selected feature was calculated.
+5. **Reshaping**: The resulting wide dataset (one row per subject-activity pair) was reshaped into long format using `data.table::melt()`.
+6. **Export**: The tidy long-format data was written to `tidy_data.txt`.
 
 ---
 
-## Variables in `tidy_data.txt`
+## Variables in Final Output (`tidy_data.txt`)
 
-- **Subject** (integer): Identifier for each of the 30 participants
-- **Activity** (factor): Descriptive activity name as listed above
-- **66 measurement variables** (numeric): Average values of original features related to mean and standard deviation
+| Column    | Description                                                  |
+|-----------|--------------------------------------------------------------|
+| Subject   | Integer (1–30) representing each participant                 |
+| Activity  | Descriptive label of the performed activity                  |
+| Feature   | Feature name (e.g., `tBodyAcc-mean()-X`, `fBodyGyro-std()-Z`) |
+| Average   | Mean of the feature value for that subject-activity pair     |
 
 ### Variable Naming Conventions
 
@@ -93,13 +79,11 @@ Original variable names (from `features.txt`) were preserved, with special chara
 
 ---
 
-## Output File
+## Final Output
 
-- **File Name**: `tidy_data.txt`
-- **Format**: Tab-delimited text file
-- **Rows**: 180 (30 subjects × 6 activities)
-- **Columns**: 68 (1 Subject + 1 Activity + 66 averaged features)
-- **No row names** (per project instructions)
+- **File**: `tidy_data.txt`
+- **Rows**: 11,880 (30 subjects × 6 activities × 66 features)
+- **Columns**: 4 (`Subject`, `Activity`, `Feature`, `Average`)
 
 ---
 

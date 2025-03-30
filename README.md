@@ -8,9 +8,9 @@ The data comes from the [UCI Human Activity Recognition Using Smartphones Datase
 
 ## Files Included
 
-- `run_analysis.R`: R script that performs all data cleaning and transformation.
-- `tidy_data.txt`: Final tidy dataset with the average of each selected variable for each activity and subject.
-- `CodeBook.md`: Detailed descriptions of the variables and transformations.
+- `run_analysis.R`: R script to download, clean, summarize, and reshape the dataset.
+- `tidy_data.txt`: Final tidy dataset in long format (one row per subject, activity, and feature).
+- `CodeBook.md`: Description of the variables, source data, and data processing steps.
 - `README.md`: Explanation of the project, script functionality, and file structure.
 
 ## How to Run
@@ -18,11 +18,23 @@ The data comes from the [UCI Human Activity Recognition Using Smartphones Datase
 1. Open `run_analysis.R` in R or RStudio.
 2. Make sure you have an internet connection — the script will automatically download and unzip the dataset if it’s not already present.
 3. The script will:
-   - Merge the training and test datasets
-   - Extract only mean and standard deviation features
-   - Assign descriptive activity names
-   - Create a tidy summary with averages for each variable by subject and activity
-4. The output file `tidy_data.txt` will be created in your working directory.
+   - Download and unzip the dataset if not already present.
+   - Merge training and test datasets.
+   - Extract only mean and standard deviation measurements.
+   - Replace activity codes with descriptive labels.
+   - Summarize the data by computing the average of each variable for each activity and subject.
+   - Reshape the data into long format using `melt()` from `data.table`.
+   - Save the final tidy dataset as `tidy_data.txt`.
+   
+## Output Format
+
+The output file `tidy_data.txt` contains the following columns:
+- `Subject`: Identifier for each subject (1 to 30)
+- `Activity`: Descriptive activity name
+- `Feature`: Name of the measurement variable
+- `Average`: Average value of the measurement for each subject-activity-feature combination
+
+This tidy structure allows easy filtering, grouping, and further analysis.
 
 ## Project Requirements Addressed
 
