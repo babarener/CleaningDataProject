@@ -30,5 +30,5 @@ The data comes from the [UCI Human Activity Recognition Using Smartphones Datase
 - 2. Extracts only the measurements on the mean and standard deviation.
 - 3. Uses descriptive activity names.
 - 4. Labels the data set with descriptive variable names.
-- 5, Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+- 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
