@@ -1,3 +1,5 @@
+install.packages("dplyr")
+install.packages("data.table")
 library(dplyr)
 library(data.table)
 
@@ -45,7 +47,24 @@ print("merged_Data should have 563 cols. col1 store the person who conduct
       the activity labeled 1 - 30. Col2 store the activity
       the person did labeled 1 - 6. Col3 - 563 are the 561 measurements")
 
-selected_data <- merged_data[, c(1, 2, required_features)]
+# Extracts only the measurements on the mean and standard deviation for each measurement. 
+selected_data <- merged_data[, c("Subject", "Activity", required_features)]
+head(selected_data)
+dim(selected_data)
+print("selected_data should have 68 columns: Subject, Activity, and 66 features related to mean() and std().")
+
+# Convert Activity column from labels to descriptive names
+selected_data$Activity <- factor(selected_data$Activity, 
+                                 levels = activity_labels$code, 
+                                 labels = activity_labels$activity)
+
+# Create an independent table set with the average of each variable
+# for each activity and each subject.
+tidy_data <- selected_data %>%
+  group_by(Subject, Activity) %>%
+  summarise_all(mean)
+write.table(tidy_data, "tidy_data.txt", row.name = FALSE)
+
 
 
 
